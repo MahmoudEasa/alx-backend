@@ -45,7 +45,7 @@ class Server:
         dataset_list = list(dataset_dict.keys())
         data_len = dataset_list[-1]
 
-        assert isinstance(index, int) and index <= data_len
+        assert isinstance(index, int) and index <= data_len and index >= 0
         assert isinstance(page_size, int) and page_size > 0
 
         new_index = index
@@ -55,8 +55,6 @@ class Server:
                     new_index = i
                     break
 
-        next_index = (new_index + page_size)
-        page_size = page_size
         data = [dataset_dict[i] for i in range(
                                                 new_index,
                                                 (new_index + page_size)
@@ -64,7 +62,7 @@ class Server:
 
         result = {
                     "index": index,
-                    "next_index": next_index,
+                    "next_index": (new_index + page_size),
                     "page_size": page_size,
                     "data": data
                 }
