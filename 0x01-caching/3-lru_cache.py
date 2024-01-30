@@ -37,6 +37,8 @@ class LRUCache(BaseCaching):
     def get(self, key):
         """ Return the value in self.cache_data linked to key """
         if key and key in self.cache_data:
+            self.queue.remove(key)
+            self.queue.append(key)
             return (self.cache_data[key])
 
         return (None)
