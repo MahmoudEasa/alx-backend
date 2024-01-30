@@ -11,15 +11,16 @@ class FIFOCache(BaseCaching):
         super().__init__()
         self.fifo_queue = deque()
         self.max_items = BaseCaching.MAX_ITEMS
+        self.size = 0
 
     def put(self, key, item):
         """  Assign to the dictionary self.cache_data
              the item value for the key key
         """
         if key and item:
-            number_of_items = len(self.fifo_queue)
+            self.size += 1
 
-            if number_of_items >= self.max_items:
+            if self.size > self.max_items:
                 if key in self.cache_data:
                     self.cache_data[key] = item
                     return
