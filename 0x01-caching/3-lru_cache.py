@@ -20,13 +20,13 @@ class LRUCache(BaseCaching):
         if key and item:
             self.size += 1
 
-            if self.size > self.max_items:
-                if key in self.cache_data:
-                    self.cache_data[key] = item
-                    self.queue.remove(key)
-                    self.queue.append(key)
-                    return
+            if key in self.cache_data:
+                self.cache_data[key] = item
+                self.queue.remove(key)
+                self.queue.append(key)
+                return
 
+            if self.size > self.max_items:
                 old = self.queue.popleft()
                 self.cache_data.pop(old)
                 print(f"DISCARD: {old}")

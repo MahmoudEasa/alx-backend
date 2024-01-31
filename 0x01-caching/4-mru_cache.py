@@ -20,13 +20,13 @@ class MRUCache(BaseCaching):
         if key and item:
             self.size += 1
 
-            if self.size > self.max_items:
-                if key in self.cache_data:
-                    self.cache_data[key] = item
-                    self.queue.remove(key)
-                    self.queue.append(key)
-                    return
+            if key in self.cache_data:
+                self.cache_data[key] = item
+                self.queue.remove(key)
+                self.queue.append(key)
+                return
 
+            if self.size > self.max_items:
                 new = self.queue.pop()
                 self.cache_data.pop(new)
                 print(f"DISCARD: {new}")

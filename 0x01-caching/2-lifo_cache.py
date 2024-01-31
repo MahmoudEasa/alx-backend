@@ -20,12 +20,12 @@ class LIFOCache(BaseCaching):
         if key and item:
             self.size += 1
 
-            if self.size > self.max_items:
-                if key in self.cache_data:
-                    self.cache_data[key] = item
-                    self.last_put = key
-                    return
+            if key in self.cache_data:
+                self.cache_data[key] = item
+                self.last_put = key
+                return
 
+            if self.size > self.max_items:
                 self.cache_data.pop(self.last_put)
                 print(f"DISCARD: {self.last_put}")
 
