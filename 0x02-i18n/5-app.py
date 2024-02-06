@@ -6,14 +6,6 @@ from flask_babel import Babel
 from typing import Union, Dict
 
 
-users = {
-    1: {"name": "Balou", "locale": "fr", "timezone": "Europe/Paris"},
-    2: {"name": "Beyonce", "locale": "en", "timezone": "US/Central"},
-    3: {"name": "Spock", "locale": "kg", "timezone": "Vulcan"},
-    4: {"name": "Teletubby", "locale": None, "timezone": "Europe/London"},
-}
-
-
 class Config:
     """ Class to configure available languages """
     LANGUAGES = ["en", "fr"]
@@ -24,6 +16,12 @@ class Config:
 app = Flask(__name__)
 app.config.from_object(Config)
 babel = Babel(app)
+users = {
+    1: {"name": "Balou", "locale": "fr", "timezone": "Europe/Paris"},
+    2: {"name": "Beyonce", "locale": "en", "timezone": "US/Central"},
+    3: {"name": "Spock", "locale": "kg", "timezone": "Vulcan"},
+    4: {"name": "Teletubby", "locale": None, "timezone": "Europe/London"},
+}
 
 
 def get_user() -> Union[Dict, None]:
@@ -39,7 +37,7 @@ def get_user() -> Union[Dict, None]:
 
 
 @app.before_request
-def before_request():
+def before_request() -> None:
     """ Set get_user as a global on flask.g.user """
     g.user = get_user()
 
