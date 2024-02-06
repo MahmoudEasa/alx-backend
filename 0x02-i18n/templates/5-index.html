@@ -7,5 +7,10 @@
 </head>
   <body>
     <h1>{{ _('home_header') }}</h1>
+    {% if user %}
+    <h1>{{ _('You are logged in as %(username)s.', username=user.name) }}</h1>
+    {% else %}
+    <h1>{{ _('You are not logged in.') }}</h1>
+    {% endif %}
   </body>
 </html>

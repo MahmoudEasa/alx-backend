@@ -1,8 +1,9 @@
 #!/usr/bin/env python3
 """ Setup a basic Flask app
 """
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, g
 from flask_babel import Babel
+from typing import Union, Dict
 
 
 users = {
@@ -24,6 +25,21 @@ app = Flask(__name__)
 app.config.from_object(Config)
 babel = Babel(app)
 
+def get_user() -> Union[Dict, None]:
+    """ Returns a user dictionary or None if the ID cannot be found
+        or if login_as was not passed
+    """
+    login_as = request.args.get("login_as", None)
+
+    if not login_as:
+        return (None)
+
+    return (users[login_as] or None)
+
+@app.before_request
+def before_request():
+    """ Set get_user as a global on flask.g.user """
+    g.user = get_user()
 
 @babel.localeselector
 def get_locale() -> str:
@@ -34,11 +50,12 @@ def get_locale() -> str:
 
     return (request.accept_languages.best_match(app.config["LANGUAGES"]))
 
+# babel.init_app(app, locale_selector=get_locale)
 
 @app.route('/')
 def home() -> str:
     """ Home Route """
-    return (render_template("4-index.html"))
+    return (render_template("5-index.html", user=g.user))
 
 
 if __name__ == "__main__":

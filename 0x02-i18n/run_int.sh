@@ -10,3 +10,5 @@ pybabel init -i messages.pot -d translations -l fr
 # Compile dictionaries with
 # pybabel compile -d translations
 
+# pybabel update -i messages.pot -d translations
+
