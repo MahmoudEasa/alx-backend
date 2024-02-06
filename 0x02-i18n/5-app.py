@@ -30,12 +30,12 @@ def get_user() -> Union[Dict, None]:
     """ Returns a user dictionary or None if the ID cannot be found
         or if login_as was not passed
     """
-    login_as = request.args.get("login_as", None)
+    login_id = request.args.get("login_as", None)
 
-    if not login_as:
+    if not login_id:
         return (None)
 
-    return (users[login_as] or None)
+    return (users.get(int(login_id), None))
 
 
 @app.before_request
