@@ -64,10 +64,7 @@ for (const el of jobs) {
     job.on('progress', (process) => console.log(`Notification job ${job.id} ${process}% complete`));
     
     job.save((err) => {
-        if (err) {
-            console.error('Error creating notification job:', err);
-        } else {
-            console.log(`Notification job created: ${job.id}`);
-        }
+        if (err) console.error('Error creating notification job:', err);
+        else console.log(`Notification job created: ${job.id}`);
     });
 }
