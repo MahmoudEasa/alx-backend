@@ -1,5 +1,7 @@
 *.swp
 venv
+redis-6.0.10*
+node_modules
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
